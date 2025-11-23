@@ -1,0 +1,27 @@
+{
+  "type": "module",
+  "name": "iancamp.github.io",
+  "version": "1.0.0",
+  "description": "A fun, colorful, single-page site built with plain HTML/CSS/JS — ready for GitHub Pages.",
+  "main": "script.js",
+  "scripts": {
+    "build": "npm run generate:photos",
+    "generate:photos": "node generate-photo-manifests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iancamp/iancamp.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iancamp/iancamp.github.io/issues"
+  },
+  "homepage": "https://github.com/iancamp/iancamp.github.io#readme",
+  "devDependencies": {
+    "exifr": "^7.1.3",
+    "serve": "^14.2.5",
+    "sharp": "^0.33.0"
+  }
+}

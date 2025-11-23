@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ian Campbell — Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="index.html" class="logo">IC.</a>
+      <button id="navToggle" class="nav-toggle" aria-label="Toggle menu">☰</button>
+      <ul id="navMenu" class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#interests">Interests</a></li>
+        <li><a href="#top" class="active">Photography</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="index.html#connect">Connect</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section id="portfolio" class="section container" data-aos="fade-up">
+      <h2 data-aos="fade-up" data-aos-delay="50">Photography</h2>
+      <p class="section-lede" data-aos="fade-up" data-aos-delay="100">A few snapshots from things that make me pause: places, faces, and food adventures.</p>
+      <div class="filters" role="tablist" aria-label="Photo categories" id="portfolioFilters" data-aos="fade-up" data-aos-delay="150">
+
+      </div>
+      <div class="grid photos" id="portfolioGrid" data-aos="fade-up" data-aos-delay="200">
+        <!-- JS will inject photo cards -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Made with 🤍 &amp; a dash of lime. © <span id="year"></span> Ian Campbell</p>
+    </div>
+  </footer>
+
+  <div id="lightbox" class="lightbox" hidden>
+    <button id="lightboxClose" class="lightbox-close" aria-label="Close">×</button>
+    <img id="lightboxImg" alt="Expanded photo" />
+    <p id="lightboxCaption" class="lightbox-caption"></p>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // THUMB_WIDTH and FULL_WIDTH are defined in script.js
+
+    async function loadAllPhotos() {
+      const [mePhotos, photographyPhotos] = await Promise.all([
+        fetch('assets/photos/me_photos.json').then(res => res.json()),
+        fetch('assets/photos/photography_photos.json').then(res => res.json())
+      ]);
+
+      const allPhotos = [
+        ...mePhotos.map(p => ({ ...p, category: 'me' })),
+        ...photographyPhotos.map(p => ({ ...p, category: 'photography' }))
+      ];
+
+      // Sort by date, newest first
+      allPhotos.sort((a, b) => b.date.localeCompare(a.date));
+
+      window.IAN_SITE_PHOTOS = allPhotos;
+      window.dispatchEvent(new Event('photosLoaded'));
+
+      const portfolioFilters = document.getElementById('portfolioFilters');
+      if (portfolioFilters) {
+        const categories = [...new Set(allPhotos.map(p => p.category))];
+        categories.forEach(cat => {
+          const button = document.createElement('button');
+          button.className = 'chip';
+          button.dataset.filter = cat;
+          button.setAttribute('role', 'tab');
+          button.textContent = cat.charAt(0).toUpperCase() + cat.slice(1); // Capitalize first letter
+          portfolioFilters.appendChild(button);
+        });
+
+        // Re-attach event listeners to all filter buttons, including new ones
+        document.querySelectorAll('#portfolio .filters .chip').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('#portfolio .filters .chip').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const f = btn.getAttribute('data-filter');
+            if (typeof renderPortfolio === 'function') renderPortfolio(f);
+          });
+        });
+
+        // Set initial active filter based on localStorage or default
+        let startView = 'photography'; // Default view
+
+        const storedFilter = localStorage.getItem('photoFilter');
+        if (storedFilter && categories.includes(storedFilter)) {
+          startView = storedFilter;
+          localStorage.removeItem('photoFilter'); // Clear the stored filter after use
+        }
+
+        const initialFilterButton = document.querySelector(`#portfolio .filters [data-filter="${startView}"]`);
+        if (initialFilterButton) {
+          initialFilterButton.classList.add('active');
+        }
+        if (typeof renderPortfolio === 'function') renderPortfolio(startView);
+
+      }
+    }
+
+    loadAllPhotos();
+  </script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</body>
+
+</html>

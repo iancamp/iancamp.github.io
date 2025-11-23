@@ -1,126 +1,234 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body, html {
-  height: 100%;
-  margin: 0;
-}
-
-.bg {
-  /* The image used */
-  background-image: url("sloth_stirring_cocktails.png");
-  /* background-image: url("sloth_jigger.png"); */
-  
-  /* Full height */
-  height: 100%; 
-  /* width: 100%; */
-
-/* Center and scale the image nicely */
-    background-position: left;
-    background-repeat: no-repeat;
-    background-size: cover;   
-
-
-  /* Add the blur effect */
-  filter: blur(8px);
-  -webkit-filter: blur(8px);
-}
-
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-}
-.container {
-  /* height: 100px; */
-  position: relative;
-  /* border: 3px solid green; */
-}
-
-.center {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  vertical-align:middle;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-
-
-    .gz-div {
-        color-scheme: dark !important;
-        -webkit-text-size-adjust: 100%;
-        --darkreader-neutral-background: #1d1d1d;
-        --darkreader-neutral-text: #b7b3ab;
-        --darkreader-selection-background: #144887;
-        --darkreader-selection-text: #c5c1b9;
-        font-family: Raleway;
-        font-weight: 400;
-        font-style: normal;
-        font-size: 22px;
-        letter-spacing: .4px;
-        line-height: 1.6em;
-        -webkit-font-smoothing: subpixel-antialiased;
-        color: rgba(196, 193, 186, 0.5);
-        text-align: center;
-    }
-
-    .gz-a {
-        color-scheme: dark !important;
-        -webkit-text-size-adjust: 100%;
-        --darkreader-neutral-background: #1d1d1d;
-        --darkreader-neutral-text: #b7b3ab;
-        --darkreader-selection-background: #144887;
-        --darkreader-selection-text: #c5c1b9;
-        -webkit-font-smoothing: subpixel-antialiased;
-        background: transparent;
-        background-image: initial;
-        display: inline-block;
-        width: auto;
-        height: auto;
-        text-align: center;
-        text-decoration: none;
-        cursor: pointer;
-        appearance: none;
-        line-height: normal;
-        padding: 20px 25px;
-        font-family: Raleway;
-        font-size: 8px;
-        font-weight: 700;
-        font-style: normal;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        text-decoration-color: initial;
-        border-color: rgb(53, 159, 113);
-        border-width: 2px;
-        border-style: solid;
-        transition: 0.1s background-color linear, 0.1s color linear;
-        border-radius: 3px;
-        background-color: rgb(119, 44, 86);
-        color: rgb(51, 165, 113);
-    }
-
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ian Campbell — Cocktail Connoisseur, Sloth Fanatic, DC Taco King</title>
+  <meta name="description"
+    content="Hi, I'm Ian — I like deep chats, live music, unique food/drinks, and new experiences. Swing through for photos, interests, and vibes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
 
 <body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="#top" class="logo">IC.</a>
+      <button id="navToggle" class="nav-toggle" aria-label="Toggle menu">☰</button>
+      <ul id="navMenu" class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#interests">Interests</a></li>
+        <li><a href="photography.html">Photos</a></li>
+        <!-- <li><a href="#gallery">Gallery</a></li> -->
+        <li><a href="#connect">Connect</a></li>
+        <li><a href="menu/index.html">Cocktails</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <div class="bg container"></div>
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero container" data-aos="fade-up">
+      <div class="hero-content" data-aos="fade-up" data-aos-delay="100">
+        <p class="eyebrow">👋 hey there, I'm</p>
+        <h1>Ian Campbell</h1>
+        <p class="tagline">Cocktail Connoisseur, Sloth Fanatic, DC Taco King</p>
+        <p class="intro">Big fan of deep chats, live music, unique food/drinks, and new experiences. Currently getting
+          into photography (<a href="#portfolio">check out my portfolio</a>!).</p>
+        <div class="cta" data-aos="fade-up" data-aos-delay="200">
+          <!-- <a class="btn primary" href="#gallery">See Photos</a> -->
+          <a class="btn primary" href="#" onclick="setPhotoFilterAndNavigate('photography');">Check out my photos</a>
+          <a class="btn ghost" href="#connect">Say Hello</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true" data-aos="fade-up" data-aos-delay="300">
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="blob b3"></div>
+      </div>
+    </section>
 
-    <div class="gz-div center">
-      <!-- <a class="gz-a" href="https://drive.google.com/file/d/14f3A4VWDGWsamLp_2oRubiUC4aqUznci" target="_blank">Click here for menu direct</a>
-      <a class="gz-a" href="https://drive.google.com/file/d/14f3A4VWDGWsamLp_2oRubiUC4aqUznci/view" target="_blank">Click here for menu view</a>
-      <a class="gz-a" href="https://drive.google.com/file/d/14f3A4VWDGWsamLp_2oRubiUC4aqUznci/preview" target="_blank">Click here for menu preview</a>
-      <a class="gz-a" href="https://drive.google.com/uc?export=download&id=14f3A4VWDGWsamLp_2oRubiUC4aqUznci" target="_blank">Click here for menu download</a>
-      <a class="gz-a" href="cocktail_menu.pdf" target="_blank">Click here for gh menu download</a> -->
-      <a class="gz-a" href="cocktail_menu.png" target="_blank">Cocktail Menu</a>
+    <!-- About -->
+    <!-- About Me with Photo Previews -->
+    <section id="about" class="section container about-with-photos" data-aos="fade-up">
+      <div class="about-grid">
+        <div class="about-photos" data-aos="fade-right">
+          <div id="photo-mx-taco" class="photo-wrapper">
+            <img src="assets/photos/me/mx_taco.jpg" alt="Ian eating tacos in Mexico" />
+            <div class="photo-caption"></div>
+          </div>
+          <div id="photo-bike-party" class="photo-wrapper">
+            <img src="assets/photos/me/bike_party.jpg" alt="Ian steering the DC Bike Party sound bike" />
+            <div class="photo-caption"></div>
+          </div>
+        </div>
+
+        <div class="about-text" data-aos="fade-left">
+          <h2>About Me</h2>
+          <p>I'm Ian — a conversation-loving human powered by good music, better tacos, and the quest for the perfect
+            cocktail. I roam around (digital nomad-style), explore new neighborhoods, and snap scenes that catch my eye.
+            I'm building up a photography habit, so expect my photo sections to keep evolving.</p>
+          <div class="cta">
+            <a class="btn primary" href="#" onclick="setPhotoFilterAndNavigate('me');">See More Photos of Me</a>
+          </div>
+        </div>
+
+        <div class="about-photos secondary" data-aos="fade-left" data-aos-delay="100">
+          <div id="photo-tux2" class="photo-wrapper">
+            <img src="assets/photos/me/tux2.jpg" alt="James Bond Ian" />
+            <div class="photo-caption"></div>
+          </div>
+          <div id="photo-tiki-ian" class="photo-wrapper">
+            <img src="assets/photos/me/tiki_ian.jpg" alt="Ian shaking tiki drinks" />
+            <div class="photo-caption"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="perks" class="section container perks" data-aos="fade-up">
+      <h2>Ian’s Perks</h2>
+      <div class="perk-grid" data-aos="fade-up" data-aos-delay="100">
+        <div class="perk">
+          <i class="far fa-eye"></i>
+          <div>
+            <h3>Sloth Fanaticism Level</h3>
+            <p class="perk-sub">Sloth Love</p>
+            <p>My love for sloths is unparalleled. Prepare for maximum sloth appreciation and cuteness overload.</p>
+          </div>
+        </div>
+        <div class="perk">
+          <i class="fas fa-pencil-ruler"></i>
+          <div>
+            <h3>Adventure Seeker Status</h3>
+            <p class="perk-sub">Explore More</p>
+            <p>Always up for trying new things and exploring new places. Let’s make some memories one adventure at a
+              time.</p>
+          </div>
+        </div>
+        <div class="perk">
+          <i class="fas fa-cocktail"></i>
+          <div>
+            <h3>Cocktail Connoisseur Skills</h3>
+            <p class="perk-sub">Mix Master</p>
+            <p>I can whip up creative cocktails — get ready to sip on something special and unique.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <div class="button-group">
+      <a class="btn primary" href="#" onclick="setPhotoFilterAndNavigate('photography');">View Full Photography</a>
+      <a class="btn ghost" href="#" onclick="setPhotoFilterAndNavigate('me');">See More Photos of Me</a>
     </div>
-    
+
+
+
+    <!-- Interests -->
+    <section id="interests" class="section container" data-aos="fade-up">
+      <h2>What I'm into</h2>
+      <ul class="badges" data-aos="fade-up" data-aos-delay="100">
+        <li>🌍 Digital nomad'ing</li>
+        <li>📷 Photography</li>
+        <li>🍸 Crafting new cocktails</li>
+        <li>🍳 Cooking</li>
+        <li>🎬 Movies</li>
+        <li>🚲 Biking</li>
+      </ul>
+    </section>
+
+    <!-- Connect -->
+    <section id="connect" class="section container" data-aos="fade-up">
+      <h2>Connect</h2>
+      <p class="section-lede">Want to say hi, swap playlists, plan a taco crawl, or chat cameras?</p>
+      <div class="cards" data-aos="fade-up" data-aos-delay="100">
+        <article class="card">
+          <h3>Instagram</h3>
+          <p><a href="https://instagram.com/the_slothian" target="_blank" rel="noopener">instagram.com/the_slothian</a>
+          </p>
+        </article>
+        <article class="card">
+          <h3>Email</h3>
+          <p><a href="mailto:hello@notarealdomain.example">hello@notarealdomain.example</a></p>
+          <p class="muted">Replace this with your real email before publishing.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Made with 🤍 &amp; a dash of lime. © <span id="year"></span> Ian Campbell</p>
+    </div>
+  </footer>
+
+  <div id="lightbox" class="lightbox" hidden>
+    <button id="lightboxClose" class="lightbox-close" aria-label="Close">×</button>
+    <img id="lightboxImg" alt="Expanded photo" />
+    <p id="lightboxCaption" class="lightbox-caption"></p>
+  </div>
+
+  <script>
+    function setPhotoFilterAndNavigate(filter) {
+      localStorage.setItem('photoFilter', filter);
+      window.location.href = 'photography.html';
+    }
+
+    async function loadAllPhotos() {
+      const [mePhotos, photographyPhotos] = await Promise.all([
+        fetch('assets/photos/me_photos.json').then(res => res.json()),
+        fetch('assets/photos/photography_photos.json').then(res => res.json())
+      ]);
+
+      const allPhotos = [
+        ...mePhotos.map(p => ({ ...p, category: 'me' })),
+        ...photographyPhotos.map(p => ({ ...p, category: 'photography' }))
+      ];
+
+      // Sort by date, newest first
+      allPhotos.sort((a, b) => b.date.localeCompare(a.date));
+
+      window.IAN_SITE_PHOTOS = allPhotos;
+      window.dispatchEvent(new Event('photosLoaded'));
+
+      const portfolioFilters = document.getElementById('portfolioFilters');
+      if (portfolioFilters) {
+        const categories = [...new Set(allPhotos.map(p => p.category))];
+        categories.forEach(cat => {
+          const button = document.createElement('button');
+          button.className = 'chip';
+          button.dataset.filter = cat;
+          button.setAttribute('role', 'tab');
+          button.textContent = cat.charAt(0).toUpperCase() + cat.slice(1); // Capitalize first letter
+          portfolioFilters.appendChild(button);
+        });
+
+        // Re-attach event listeners to all filter buttons, including new ones
+        document.querySelectorAll('#portfolio .filters .chip').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('#portfolio .filters .chip').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const f = btn.getAttribute('data-filter');
+            if (typeof renderPortfolio === 'function') renderPortfolio(f);
+          });
+        });
+      }
+    }
+
+    loadAllPhotos();
+  </script>
+  <script src="script.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 </body>
 
-<!-- <img src="cocktail_menu.png" alt="menu" height="100%" /> -->
-<!-- <iframe src="cocktail_menu.pdf" style="width: 100%;height: 100%;border: none;"></iframe> –  -->
-<!-- <embed src="https://drive.google.com/file/d/14f3A4VWDGWsamLp_2oRubiUC4aqUznci/preview" type="application/pdf" width="100%" height="100%" /> -->
+</html>
