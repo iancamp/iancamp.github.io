@@ -32,14 +32,6 @@
     "date": "2025-08-21"
   },
   {
-    "src": "assets/photos/photography/DSCF8472.jpg",
-    "thumbSrc": "assets/photos/thumbs/DSCF8472_thumb.webp",
-    "fullSrc": "assets/photos/full/DSCF8472_full.webp",
-    "alt": "DSCF8472",
-    "caption": "",
-    "date": "2025-08-21"
-  },
-  {
     "src": "assets/photos/photography/DSCF8240-HDR.jpg",
     "thumbSrc": "assets/photos/thumbs/DSCF8240-HDR_thumb.webp",
     "fullSrc": "assets/photos/full/DSCF8240-HDR_full.webp",
@@ -62,14 +54,6 @@
     "alt": "DSCF8344",
     "caption": "",
     "date": "2025-08-20"
-  },
-  {
-    "src": "assets/photos/photography/DSCF8093.jpg",
-    "thumbSrc": "assets/photos/thumbs/DSCF8093_thumb.webp",
-    "fullSrc": "assets/photos/full/DSCF8093_full.webp",
-    "alt": "DSCF8093",
-    "caption": "",
-    "date": "2025-08-19"
   },
   {
     "src": "assets/photos/photography/DSCF8115.jpg",
@@ -152,11 +136,75 @@
     "date": "2025-08-15"
   },
   {
-    "src": "assets/photos/photography/DSCF7698-HDR.jpg",
-    "thumbSrc": "assets/photos/thumbs/DSCF7698-HDR_thumb.webp",
-    "fullSrc": "assets/photos/full/DSCF7698-HDR_full.webp",
-    "alt": "DSCF7698 HDR",
+    "src": "assets/photos/photography/DSCF7598-HDR.jpg",
+    "thumbSrc": "assets/photos/thumbs/DSCF7598-HDR_thumb.webp",
+    "fullSrc": "assets/photos/full/DSCF7598-HDR_full.webp",
+    "alt": "DSCF7598 HDR",
     "caption": "",
-    "date": "2025-08-15"
+    "date": "2025-08-13"
+  },
+  {
+    "src": "assets/photos/photography/DSCF7638-HDR.jpg",
+    "thumbSrc": "assets/photos/thumbs/DSCF7638-HDR_thumb.webp",
+    "fullSrc": "assets/photos/full/DSCF7638-HDR_full.webp",
+    "alt": "DSCF7638 HDR",
+    "caption": "",
+    "date": "2025-08-13"
+  },
+  {
+    "src": "assets/photos/photography/DSCF7138.jpg",
+    "thumbSrc": "assets/photos/thumbs/DSCF7138_thumb.webp",
+    "fullSrc": "assets/photos/full/DSCF7138_full.webp",
+    "alt": "DSCF7138",
+    "caption": "",
+    "date": "2025-08-12"
+  },
+  {
+    "src": "assets/photos/photography/DSCF7359-HDR.jpg",
+    "thumbSrc": "assets/photos/thumbs/DSCF7359-HDR_thumb.webp",
+    "fullSrc": "assets/photos/full/DSCF7359-HDR_full.webp",
+    "alt": "DSCF7359 HDR",
+    "caption": "",
+    "date": "2025-08-12"
+  },
+  {
+    "src": "assets/photos/photography/DSCF7039.jpg",
+    "thumbSrc": "assets/photos/thumbs/DSCF7039_thumb.webp",
+    "fullSrc": "assets/photos/full/DSCF7039_full.webp",
+    "alt": "DSCF7039",
+    "caption": "",
+    "date": "2025-08-11"
+  },
+  {
+    "src": "assets/photos/photography/DSCF7044-HDR.jpg",
+    "thumbSrc": "assets/photos/thumbs/DSCF7044-HDR_thumb.webp",
+    "fullSrc": "assets/photos/full/DSCF7044-HDR_full.webp",
+    "alt": "DSCF7044 HDR",
+    "caption": "",
+    "date": "2025-08-11"
+  },
+  {
+    "src": "assets/photos/photography/DSCF7051.jpg",
+    "thumbSrc": "assets/photos/thumbs/DSCF7051_thumb.webp",
+    "fullSrc": "assets/photos/full/DSCF7051_full.webp",
+    "alt": "DSCF7051",
+    "caption": "",
+    "date": "2025-08-11"
+  },
+  {
+    "src": "assets/photos/photography/DSCF7091.jpg",
+    "thumbSrc": "assets/photos/thumbs/DSCF7091_thumb.webp",
+    "fullSrc": "assets/photos/full/DSCF7091_full.webp",
+    "alt": "DSCF7091",
+    "caption": "",
+    "date": "2025-08-11"
+  },
+  {
+    "src": "assets/photos/photography/DSCF6891-HDR.jpg",
+    "thumbSrc": "assets/photos/thumbs/DSCF6891-HDR_thumb.webp",
+    "fullSrc": "assets/photos/full/DSCF6891-HDR_full.webp",
+    "alt": "DSCF6891 HDR",
+    "caption": "",
+    "date": "2025-08-09"
   }
 ]
