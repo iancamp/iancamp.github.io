@@ -160,7 +160,7 @@ async function buildManifest(folder) {
 
     let date, city, country;
     const existingPhoto = existingPhotosMap.get(name);
-    logger.debug(`DEBUG: Processing file ${file}. Existing photo entry found: ${!!existingPhoto}`);
+    logger.debug(`DEBUG: Looking up photo '${name}' in map. Map has key: ${existingPhotosMap.has(name)}. Found entry: ${!!existingPhoto}`);
     if (existingPhoto && 'caption' in existingPhoto) {
       logger.debug(`DEBUG: Existing caption for ${file}: "${existingPhoto.caption}"`);
     }
