@@ -8,6 +8,33 @@ const state = {
   },
 };
 
+function formatPhotoDescription(p) {
+  let parts = [];
+  if (p.caption) {
+    parts.push(p.caption);
+  }
+
+  let locationParts = [];
+  if (p.city) {
+    locationParts.push(p.city);
+  }
+  if (p.country) {
+    locationParts.push(p.country);
+  }
+  const locationStr = locationParts.join(', ');
+
+  if (locationStr) {
+    if (p.caption) {
+      return `${p.caption} - ${locationStr}`;
+    } else {
+      return locationStr;
+    }
+  } else if (p.caption) {
+    return p.caption;
+  }
+  return p.alt || ''; // Fallback to alt if nothing else
+}
+
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
@@ -53,7 +80,7 @@ function makePhotoCard(p) {
 
   const caption = document.createElement('div');
   caption.className = 'photo-caption';
-  caption.textContent = p.caption;
+  caption.textContent = formatPhotoDescription(p);
 
   wrapper.appendChild(img);
   wrapper.appendChild(caption);
@@ -68,7 +95,7 @@ function makeMasonryTile(p) {
   img.src = p.thumbSrc;
   img.srcset = `${p.thumbSrc} ${THUMB_WIDTH}w, ${p.fullSrc} ${FULL_WIDTH}w`;
   img.sizes = `(max-width: ${THUMB_WIDTH}px) ${THUMB_WIDTH}px, ${FULL_WIDTH}px`;
-  img.alt = p.alt;
+  img.alt = formatPhotoDescription(p);
   img.loading = 'lazy';
   img.width = p.width;
   img.height = p.height;
@@ -86,7 +113,7 @@ const lightboxClose = document.getElementById('lightboxClose');
 function openLightbox(p) {
   if (!lightbox) return;
   lightboxImg.src = p.fullSrc;
-  lightboxCaption.textContent = p.caption || '';
+  lightboxCaption.textContent = formatPhotoDescription(p);
   lightbox.hidden = false;
 }
 if (lightboxClose) lightboxClose.addEventListener('click', () => lightbox.hidden = true);
@@ -113,7 +140,7 @@ window.addEventListener('photosLoaded', () => {
     if (photoWrapper) {
       const img = photoWrapper.querySelector('img');
       const captionDiv = photoWrapper.querySelector('.photo-caption');
-      console.log(captionDiv)
+      console.log(captionDiv);
       if (img && captionDiv) {
         // Extract filename from src to match with JSON data
         const imgFilename = img.src.split('/').pop().split('.')[0]; // e.g., "mx_taco"

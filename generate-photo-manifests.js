@@ -8,6 +8,9 @@ import dotenv from "dotenv";
 // Load environment variables from .env (if present)
 dotenv.config();
 
+// Load logger after dotenv so .env values (LOG_LEVEL/DEBUG) are respected
+const { default: logger } = await import("./logger.js");
+
 // Geocoder configuration: provider and API key can be set via env vars.
 // Default to OpenCage so your `OPENCAGE_KEY` in `.env` is used automatically.
 const GEOCODER_PROVIDER = process.env.GEOCODER_PROVIDER || "opencage";
@@ -38,15 +41,13 @@ if (!SKIP_GEOCODING_IN_CI) {
   // For providers that require an API key (like opencage, mapbox, google), ensure we have one.
   const providerRequiresKey = ["opencage", "mapbox", "google", "geoapify", "locationiq"].includes(GEOCODER_PROVIDER);
   if (providerRequiresKey && !GEOCODER_API_KEY) {
-    console.warn(`Geocoder provider '${GEOCODER_PROVIDER}' requires an API key. Set GEOCODER_API_KEY or OPENCAGE_API_KEY in your .env to enable reverse geocoding.`);
+    logger.warn(`Geocoder provider '${GEOCODER_PROVIDER}' requires an API key. Set GEOCODER_API_KEY or OPENCAGE_API_KEY in your .env to enable reverse geocoding.`);
   } else {
     geocoder = NodeGeocoder(geocoderOptions);
   }
 } else {
-  console.log("CI environment detected — geocoding disabled.");
-}
-
-// --- CONFIGURATION ---
+  logger.info("CI environment detected — geocoding disabled.");
+}// --- CONFIGURATION ---
 const SRC_BASE_DIR = "assets/photos"; // where your original JPGs live
 const OUT_BASE_DIR = process.env.OUT_BASE_DIR || SRC_BASE_DIR; // where webp + json will be written
 
@@ -110,16 +111,14 @@ try {
     geocodeCache = new Map(Object.entries(obj));
   }
 } catch (e) {
-  console.warn("Could not load geocode cache:", e.message);
-}
-
-// --- MANIFEST BUILDER ---
+  logger.warn("Could not load geocode cache:", e.message);
+}// --- MANIFEST BUILDER ---
 async function buildManifest(folder) {
   const srcDir = path.join(SRC_BASE_DIR, folder); // input folder
   const outputFile = path.join(OUT_BASE_DIR, `${folder}_photos.json`);
 
   if (!fs.existsSync(srcDir)) {
-    console.error(`❌ Source folder not found: ${srcDir}`);
+    logger.error(`❌ Source folder not found: ${srcDir}`);
     return;
   }
 
@@ -129,15 +128,23 @@ async function buildManifest(folder) {
 
   // Read existing manifest if it exists
   if (fs.existsSync(outputFile)) {
+    logger.debug(`DEBUG: Manifest file exists: ${outputFile}`);
     try {
-      const existingData = JSON.parse(fs.readFileSync(outputFile, "utf-8"));
-      existingData.forEach(photo => existingPhotosMap.set(path.parse(photo.src).name.replace(/_full\.webp$/, ''), photo));
+      const raw = fs.readFileSync(outputFile, "utf-8");
+      logger.debug(`DEBUG: Raw manifest content length: ${raw.length}`);
+      const existingData = JSON.parse(raw || "[]"); // ensure it's an array if raw is empty
+      logger.debug(`DEBUG: Parsed existingData length: ${existingData.length}`);
+      existingData.forEach(photo => {
+        const key = path.parse(photo.fullSrc).name.replace(/_full$/, ''); // Correctly derive base name
+        existingPhotosMap.set(key, photo);
+      });
+      logger.debug(`DEBUG: Loaded ${existingPhotosMap.size} existing photos into map from ${outputFile}`);
     } catch (e) {
-      console.warn(`WARN: Could not read existing manifest ${outputFile}. Starting fresh.`, e.message);
+      logger.warn(`WARN: Could not read existing manifest ${outputFile}. Starting fresh.`, e.message);
     }
-  }
-
-  for (const file of files) {
+  } else {
+    logger.debug(`DEBUG: Manifest file does NOT exist: ${outputFile}`);
+  } for (const file of files) {
     const fullPath = path.join(srcDir, file);
     const name = path.parse(file).name;
     const thumbOutput = path.join(THUMB_DIR, `${name}_thumb.webp`);
@@ -153,6 +160,10 @@ async function buildManifest(folder) {
 
     let date, city, country;
     const existingPhoto = existingPhotosMap.get(name);
+    logger.debug(`DEBUG: Processing file ${file}. Existing photo entry found: ${!!existingPhoto}`);
+    if (existingPhoto && 'caption' in existingPhoto) {
+      logger.debug(`DEBUG: Existing caption for ${file}: "${existingPhoto.caption}"`);
+    }
     const skipGpsForThis = SKIP_GPS_FOLDERS.includes(folder);
 
     if (skipGpsForThis) {
@@ -162,7 +173,7 @@ async function buildManifest(folder) {
         city = existingPhoto.city;
         country = existingPhoto.country;
         date = existingPhoto.date;
-        console.log(`💡 Using existing location data for ${file}: ${city}, ${country} (folder '${folder}' configured to skip GPS)`);
+        logger.debug(`💡 Using existing location data for ${file}: ${city}, ${country} (folder '${folder}' configured to skip GPS)`);
       } else {
         // Only extract the date; skip all GPS work
         try {
@@ -174,17 +185,17 @@ async function buildManifest(folder) {
         }
         city = existingPhoto?.city || null;
         country = existingPhoto?.country || null;
-        console.log(`ℹ️ Skipping GPS extraction for ${file} (folder '${folder}')`);
+        logger.debug(`ℹ️ Skipping GPS extraction for ${file} (folder '${folder}')`);
       }
     } else {
       if (existingPhoto && existingPhoto.city && existingPhoto.country && !FORCE_RECALC_GPS) {
         city = existingPhoto.city;
         country = existingPhoto.country;
         date = existingPhoto.date;
-        console.log(`💡 Using existing location data for ${file}: ${city}, ${country}`);
+        logger.debug(`💡 Using existing location data for ${file}: ${city}, ${country}`);
       } else {
         if (existingPhoto && FORCE_RECALC_GPS) {
-          console.log(`🔁 FORCE_RECALC_GPS enabled — will re-calculate location for ${file}. Previous: ${existingPhoto.city || 'N/A'}, ${existingPhoto.country || 'N/A'}`);
+          logger.debug(`🔁 FORCE_RECALC_GPS enabled — will re-calculate location for ${file}. Previous: ${existingPhoto.city || 'N/A'}, ${existingPhoto.country || 'N/A'}`);
         }
       }
       try {
@@ -198,84 +209,86 @@ async function buildManifest(folder) {
         try {
           gpsCoords = await exifr.gps(fullPath);
         } catch (gpe) {
-          console.warn(`DEBUG: exifr.gps failed for ${file}:`, gpe && gpe.message ? gpe.message : gpe);
+          logger.warn(`DEBUG: exifr.gps failed for ${file}:`, gpe && gpe.message ? gpe.message : gpe);
         }
 
         // Also peek at raw EXIF GPS tags for diagnostics (DMS + Ref fields)
         const rawExif = await exifr.parse(fullPath, ["GPSLatitude", "GPSLongitude", "GPSLatitudeRef", "GPSLongitudeRef"]).catch(() => ({}));
-        console.log(`DEBUG: EXIF keys for ${file}:`, Object.keys(rawExif || {}));
-        console.log(`DEBUG: EXIF GPS raw for ${file}:`, { GPSLatitude: rawExif?.GPSLatitude, GPSLongitude: rawExif?.GPSLongitude, GPSLatitudeRef: rawExif?.GPSLatitudeRef, GPSLongitudeRef: rawExif?.GPSLongitudeRef });
-        console.log(`DEBUG: exifr.gps output for ${file}:`, gpsCoords);
+        logger.debug(`DEBUG: EXIF keys for ${file}:`, Object.keys(rawExif || {}));
+        logger.debug(`DEBUG: EXIF GPS raw for ${file}:`, { GPSLatitude: rawExif?.GPSLatitude, GPSLongitude: rawExif?.GPSLongitude, GPSLatitudeRef: rawExif?.GPSLatitudeRef, GPSLongitudeRef: rawExif?.GPSLongitudeRef });
+        logger.debug(`DEBUG: exifr.gps output for ${file}:`, gpsCoords);
 
         // Determine lat/lon, prefer exifr.gps signed decimals when present
         const lat = gpsCoords?.latitude ?? gpsToDecimal(rawExif?.GPSLatitude, rawExif?.GPSLatitudeRef);
         const lon = gpsCoords?.longitude ?? gpsToDecimal(rawExif?.GPSLongitude, rawExif?.GPSLongitudeRef);
-        console.log(`DEBUG: Converted GPS for ${file}: lat=${lat}, lon=${lon}`);
+        logger.debug(`DEBUG: Converted GPS for ${file}: lat=${lat}, lon=${lon}`);
 
         if (lat != null && lon != null) {
           // Use a coarse key to cache nearby coordinates together
           const cacheKey = `${lat.toFixed(4)},${lon.toFixed(4)}`;
           if (geocodeCache.has(cacheKey)) {
             const cached = geocodeCache.get(cacheKey);
-            console.log(`DEBUG: Geocode cache hit for ${cacheKey} ->`, cached);
+            logger.debug(`DEBUG: Geocode cache hit for ${cacheKey} ->`, cached);
             city = cached.city;
             country = cached.country;
           } else if (SKIP_GEOCODING_IN_CI) {
             // In CI we skip live reverse lookups to avoid external calls
-            console.log(`CI detected; skipping reverse geocoding for ${file}`);
+            logger.info(`CI detected; skipping reverse geocoding for ${file}`);
           } else {
             // Only delay if a positive delay is configured; allow disabling throttle by setting GEOCODER_DELAY=0
             if (GEOCODER_DELAY > 0) await delay(GEOCODER_DELAY);
             if (!geocoder) {
-              console.log(`No geocoder configured; skipping reverse geocoding for ${file}`);
+              logger.debug(`No geocoder configured; skipping reverse geocoding for ${file}`);
             } else {
               try {
-                console.log(`DEBUG: Making reverse geocode request for ${file} (lat=${lat}, lon=${lon}) using provider=${GEOCODER_PROVIDER}`);
+                logger.debug(`DEBUG: Making reverse geocode request for ${file} (lat=${lat}, lon=${lon}) using provider=${GEOCODER_PROVIDER}`);
                 const geo = await geocoder.reverse({ lat, lon });
-                console.log(`DEBUG: Geocoder response for ${file}:`, Array.isArray(geo) ? geo[0] : geo);
+                logger.debug(`DEBUG: Geocoder response for ${file}:`, Array.isArray(geo) ? geo[0] : geo);
                 if (geo && geo.length > 0) {
                   city = geo[0].city || geo[0].smalltown || geo[0].village || geo[0].town || null;
                   country = geo[0].country || null;
                   geocodeCache.set(cacheKey, { city: city || null, country: country || null });
-                  console.log(`DEBUG: Cached geocode for ${cacheKey} ->`, { city, country });
+                  logger.debug(`DEBUG: Cached geocode for ${cacheKey} ->`, { city, country });
                 }
               } catch (gerr) {
-                console.error(`Geocoding failed for ${file}:`, gerr && gerr.message ? gerr.message : gerr);
+                logger.error(`Geocoding failed for ${file}:`, gerr && gerr.message ? gerr.message : gerr);
               }
             }
           }
         }
       } catch (e) {
-        console.error(`Error processing EXIF or geocoding for ${file}:`, e.message);
+        logger.error(`Error processing EXIF or geocoding for ${file}:`, e.message);
         date = fs.statSync(fullPath).birthtime.toISOString().split("T")[0];
       }
     }
 
-    // Preserve existing caption if present in the manifest. Do not append location to captions.
-    const caption = existingPhoto && existingPhoto.caption ? existingPhoto.caption : name.replace(/[-_]/g, " ");
-
-    photos.push({
+    // Do NOT modify captions via script. Preserve existing caption if present; otherwise omit caption entirely.
+    const photoEntry = {
       src: path.join(FULL_DIR, `${name}_full.webp`).replace(/\\/g, "/"),
       thumbSrc: `/assets/photos/thumbs/${name}_thumb.webp`,
       fullSrc: `/assets/photos/full/${name}_full.webp`,
-      alt: name.replace(/[-_]/g, " "),
       date,
       width,
       height,
-      caption,
       city: city || null,
-      country: country || null
-    });
+      country: country || null,
+    };
+
+    if (existingPhoto && 'caption' in existingPhoto) {
+      photoEntry.caption = existingPhoto.caption;
+    }
+
+    photos.push(photoEntry);
   }
 
   fs.writeFileSync(outputFile, JSON.stringify(photos, null, 2));
-  console.log(`✅ Wrote ${photos.length} entries to ${outputFile}`);
+  logger.info(`✅ Wrote ${photos.length} entries to ${outputFile}`);
   // Persist geocode cache after writing manifest for this folder
   try {
     const obj = Object.fromEntries(geocodeCache);
     fs.writeFileSync(GEOCODE_CACHE_FILE, JSON.stringify(obj, null, 2));
   } catch (e) {
-    console.warn("Could not persist geocode cache:", e.message);
+    logger.warn("Could not persist geocode cache:", e.message);
   }
 }
 
