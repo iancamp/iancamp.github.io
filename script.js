@@ -81,7 +81,7 @@ const lightboxClose = document.getElementById('lightboxClose');
 function openLightbox(p) {
   if (!lightbox) return;
   lightboxImg.src = p.fullSrc;
-  lightboxCaption.textContent = p.caption || p.alt || '';
+  lightboxCaption.textContent = p.caption || '';
   lightbox.hidden = false;
 }
 if (lightboxClose) lightboxClose.addEventListener('click', () => lightbox.hidden = true);
