@@ -45,10 +45,3 @@ jobs:
           publish_dir: ./dist
           force_orphan: true
           enable_jekyll: false
-
-      # 8️⃣ Verify remote gh-pages branch content
-      - name: Verify remote gh-pages branch
-        run: |
-          mkdir temp_gh_pages
-          git clone --branch gh-pages --single-branch https://github.com/${{ github.repository }}.git temp_gh_pages
-          ls -R temp_gh_pages/assets/photos

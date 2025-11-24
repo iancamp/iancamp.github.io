@@ -51,8 +51,8 @@ async function buildManifest(folder) {
 
     photos.push({
       src: path.join(FULL_DIR, `${name}_full.webp`).replace(/\\/g, "/"),
-      thumbSrc: path.join(THUMB_DIR, `${name}_thumb.webp`).replace(/\\/g, "/"),
-      fullSrc: path.join(FULL_DIR, `${name}_full.webp`).replace(/\\/g, "/"),
+      thumbSrc: `/assets/photos/thumbs/${name}_thumb.webp`,
+      fullSrc: `/assets/photos/full/${name}_full.webp`,
       alt: name.replace(/[-_]/g, " "),
       date
     });
