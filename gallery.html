@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ian Campbell — Photo Gallery</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="index.html" class="logo">IC.</a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="#top" class="active">Gallery</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="section container">
+    <h1>Photo Gallery</h1>
+    <p class="section-lede">A peek into my world — both behind and in front of the lens.</p>
+
+    <div class="filters" id="galleryFilters">
+      <button class="chip active" data-view="me">Me</button>
+      <button class="chip" data-view="photography">Photography</button>
+    </div>
+
+    <div class="masonry" id="galleryContent"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Made with 🤍 & a dash of lime. © <span id="year"></span> Ian Campbell</p>
+    </div>
+  </footer>
+
+  <div id="lightbox" class="lightbox" hidden>
+    <button id="lightboxClose" class="lightbox-close" aria-label="Close">×</button>
+    <img id="lightboxImg" alt="Expanded photo" />
+    <p id="lightboxCaption" class="lightbox-caption"></p>
+  </div>
+
+  <script>
+    const THUMB_WIDTH = 400; // Must match generate-photo-manifests.js
+    const FULL_WIDTH = 1600; // Must match generate-photo-manifests.js
+
+    async function loadPhotos(view) {
+      const file = view === 'me'
+        ? 'assets/photos/me_photos.json'
+        : 'assets/photos/photography_photos.json';
+      const res = await fetch(file);
+      const photos = await res.json();
+
+      // sort newest first
+      photos.sort((a, b) => b.date.localeCompare(a.date));
+      return photos;
+    }
+
+    const galleryContent = document.getElementById('galleryContent');
+    const buttons = document.querySelectorAll('#galleryFilters .chip');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    function openLightbox(p) {
+      lightboxImg.src = p.fullSrc;
+      lightboxCaption.textContent = p.caption || '';
+      lightbox.hidden = false;
+    }
+
+    lightboxClose.addEventListener('click', () => lightbox.hidden = true);
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) lightbox.hidden = true;
+    });
+
+    async function renderGallery(view) {
+      galleryContent.innerHTML = '<p style="opacity:0.7;">Loading photos...</p>';
+      const data = await loadPhotos(view);
+      galleryContent.innerHTML = '';
+      data.forEach(p => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'photo-wrapper';
+
+        const img = document.createElement('img');
+        img.src = p.thumbSrc;
+        img.srcset = `${p.thumbSrc} ${THUMB_WIDTH}w, ${p.fullSrc} ${FULL_WIDTH}w`;
+        img.sizes = `(max-width: ${THUMB_WIDTH}px) ${THUMB_WIDTH}px, ${FULL_WIDTH}px`;
+        img.alt = p.alt || '';
+        img.loading = 'lazy';
+        // img.style.filter = `brightness(${p.brightness || 1})`;
+        if (p.brightness && p.brightness !== 1) {
+          img.style.filter = `brightness(${p.brightness})`;
+        } else {
+          img.style.removeProperty('filter');
+        }
+
+        img.addEventListener('click', () => openLightbox(p));
+
+        wrapper.appendChild(img);
+
+        // Caption must go *after* the img in DOM
+        if (p.caption && p.caption.trim() !== '') {
+          const caption = document.createElement('div');
+          caption.className = 'photo-caption';
+          caption.textContent = p.caption;
+          wrapper.appendChild(caption);
+        }
+
+        galleryContent.appendChild(wrapper);
+      });
+
+
+    }
+
+    // --- Filter buttons ---
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderGallery(btn.dataset.view);
+      });
+    });
+
+    // --- Initial load (with URL ?view param support) ---
+    const params = new URLSearchParams(window.location.search);
+    const startView = params.get('view') || 'me';
+    document.querySelector(`[data-view="${startView}"]`)?.classList.add('active');
+    renderGallery(startView);
+  </script>
+  
+
+</body>
+
+</html>

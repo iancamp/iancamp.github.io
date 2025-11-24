@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ian Campbell — Photos of Me</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav container">
+      <a href="index.html" class="logo">IC.</a>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#gallery">Gallery</a></li>
+        <li><a href="photography.html">Photography</a></li>
+        <li><a href="#top" class="active">Me</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="section container">
+    <h1>Photos of Me</h1>
+    <p class="section-lede">A few glimpses of life — tacos, travel, laughter, and the occasional sloth shirt.</p>
+
+    <div class="masonry" id="meGallery">
+      <img src="assets/photos/me_01.jpg" alt="Ian smiling at a cafe" />
+      <img src="assets/photos/me_02.jpg" alt="Ian exploring a market" />
+      <img src="assets/photos/me_03.jpg" alt="Ian mixing a cocktail" />
+      <img src="assets/photos/me_04.jpg" alt="Ian biking" />
+      <img src="assets/photos/me_05.jpg" alt="Ian with friends" />
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Made with 🤍 & a dash of lime. © <span id="year"></span> Ian Campbell</p>
+    </div>
+  </footer>
+
+  <div id="lightbox" class="lightbox" hidden>
+    <button id="lightboxClose" class="lightbox-close" aria-label="Close">×</button>
+    <img id="lightboxImg" alt="Expanded photo" />
+    <p id="lightboxCaption" class="lightbox-caption"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
