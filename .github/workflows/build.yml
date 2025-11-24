@@ -20,11 +20,9 @@ jobs:
       - name: Install dependencies (if any)
         run: npm install || true
 
-      # Ensure the dist tree exists (script also mkdirs, but this is harmless)
       - name: Prepare build output directory
         run: mkdir -p dist/assets/photos
 
-      # If you have a site build, keep this. If not, it's fine — it will no-op.
       - name: Build site
         run: |
           if [ -f package.json ] && grep -q "\"build\"" package.json; then
@@ -36,13 +34,11 @@ jobs:
       - name: Generate photo manifests
         run: node generate-photo-manifests.js
         env:
-          # READ from assets/photos (default in script) — don't override SRC_BASE_DIR here
           OUT_BASE_DIR: dist/assets/photos
-      
+
       - name: Remove original JPG and PNG files
         run: find dist/assets/photos -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) -delete
 
-      # 3️⃣ Add .nojekyll (safe even if not needed)
       - name: Disable Jekyll
         run: touch dist/.nojekyll
 

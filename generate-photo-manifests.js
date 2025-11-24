@@ -4,8 +4,9 @@ import exifr from "exifr";
 import sharp from "sharp";
 
 // NEW: separate source vs output roots
-const SRC_BASE_DIR = process.env.SRC_BASE_DIR || "assets/photos";       // where your originals live (locally & in repo)
-const OUT_BASE_DIR = process.env.OUT_BASE_DIR || SRC_BASE_DIR;          // where to write webp+json (CI: dist/assets/photos)
+const SRC_BASE_DIR = "assets/photos";
+const OUT_BASE_DIR = process.env.OUT_BASE_DIR || SRC_BASE_DIR;
+
 
 const folders = ["me", "photography"];
 const THUMB_WIDTH = 400;
