@@ -36,7 +36,8 @@ function renderGallery() {
 }
 
 function makePhotoCard(p) {
-  const figure = document.createElement('figure');
+  const div = document.createElement('div');
+  div.className = 'tile';
   const wrapper = document.createElement('div');
   wrapper.className = 'photo-wrapper';
 
@@ -54,8 +55,8 @@ function makePhotoCard(p) {
 
   wrapper.appendChild(img);
   wrapper.appendChild(caption);
-  figure.appendChild(wrapper);
-  return figure;
+  div.appendChild(wrapper);
+  return div;
 }
 
 function makeMasonryTile(p) {
