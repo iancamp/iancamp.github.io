@@ -3,22 +3,29 @@ import path from "path";
 import exifr from "exifr";
 import sharp from "sharp";
 
-const baseDir = process.env.BASE_DIR || "assets/photos";
+// NEW: separate source vs output roots
+const SRC_BASE_DIR = process.env.SRC_BASE_DIR || "assets/photos";       // where your originals live (locally & in repo)
+const OUT_BASE_DIR = process.env.OUT_BASE_DIR || SRC_BASE_DIR;          // where to write webp+json (CI: dist/assets/photos)
+
 const folders = ["me", "photography"];
 const THUMB_WIDTH = 400;
 const FULL_WIDTH = 1600;
-const THUMB_DIR = path.join(baseDir, "thumbs");
-const FULL_DIR = path.join(baseDir, "full");
+const THUMB_DIR = path.join(OUT_BASE_DIR, "thumbs");
+const FULL_DIR = path.join(OUT_BASE_DIR, "full");
 
 // Ensure output directories exist
 fs.mkdirSync(THUMB_DIR, { recursive: true });
 fs.mkdirSync(FULL_DIR, { recursive: true });
 
 async function buildManifest(folder) {
-  const dirPath = path.join(baseDir, folder);
-  const outputFile = path.join(baseDir, `${folder}_photos.json`);
+  const dirPath = path.join(SRC_BASE_DIR, folder); // read from source dir
+  const outputFile = path.join(OUT_BASE_DIR, `${folder}_photos.json`); // write json to OUT dir
 
-  // Load existing data (if any)
+  if (!fs.existsSync(dirPath)) {
+    throw new Error(`Source folder not found: ${dirPath}`);
+  }
+
+  // Load existing captions (if any) from previous OUT json
   let existing = {};
   if (fs.existsSync(outputFile)) {
     try {
@@ -29,44 +36,44 @@ async function buildManifest(folder) {
     }
   }
 
-  const files = fs.readdirSync(dirPath).filter(f => /\.(jpe?g|png|webp)$/i.test(f));
+  // Only treat JPG/PNG as inputs (do not include existing webp files)
+  const files = fs.readdirSync(dirPath).filter(f => /\.(jpe?g|png)$/i.test(f));
   const photos = [];
 
   for (const filename of files) {
     const fullPath = path.join(dirPath, filename);
-    const thumbFilename = `${path.parse(filename).name}_thumb.webp`;
-    const fullWebpFilename = `${path.parse(filename).name}_full.webp`;
+    const nameOnly = path.parse(filename).name;
+
+    const thumbFilename = `${nameOnly}_thumb.webp`;
+    const fullWebpFilename = `${nameOnly}_full.webp`;
     const thumbOutputPath = path.join(THUMB_DIR, thumbFilename);
     const fullOutputPath = path.join(FULL_DIR, fullWebpFilename);
 
     // Generate thumbnail
-    await sharp(fullPath)
-      .resize(THUMB_WIDTH)
-      .webp({ quality: 80 })
-      .toFile(thumbOutputPath);
+    await sharp(fullPath).resize(THUMB_WIDTH).webp({ quality: 80 }).toFile(thumbOutputPath);
 
     // Generate optimized full-size WebP
-    await sharp(fullPath)
-      .resize(FULL_WIDTH)
-      .webp({ quality: 90 })
-      .toFile(fullOutputPath);
+    await sharp(fullPath).resize(FULL_WIDTH).webp({ quality: 90 }).toFile(fullOutputPath);
 
+    // EXIF for date/caption (fallbacks preserved)
     let date, caption;
-
     try {
       const exif = await exifr.parse(fullPath, ["DateTimeOriginal", "ImageDescription"]);
       const dt = exif?.DateTimeOriginal || fs.statSync(fullPath).birthtime;
       date = new Date(dt).toISOString().split("T")[0];
-      caption = exif?.ImageDescription || existing[path.join(baseDir, folder, filename).replace(/\\/g, "/")] || "";
+      caption = exif?.ImageDescription || existing[path.join(FULL_DIR, fullWebpFilename).replace(/\\/g, "/")] || "";
     } catch {
       date = fs.statSync(fullPath).birthtime.toISOString().split("T")[0];
-      caption = existing[path.join(baseDir, folder, filename).replace(/\\/g, "/")] || "";
+      caption = existing[path.join(FULL_DIR, fullWebpFilename).replace(/\\/g, "/")] || "";
     }
 
+    // Manifest: only webp paths (no original JPGs)
     photos.push({
+      // If you want a generic "src", point to the full webp:
+      src: path.join(FULL_DIR, fullWebpFilename).replace(/\\/g, "/"),
       thumbSrc: path.join(THUMB_DIR, thumbFilename).replace(/\\/g, "/"),
       fullSrc: path.join(FULL_DIR, fullWebpFilename).replace(/\\/g, "/"),
-      alt: filename.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " "),
+      alt: nameOnly.replace(/[-_]/g, " "),
       caption,
       date
     });
