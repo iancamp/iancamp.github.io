@@ -6,9 +6,9 @@
   "main": "script.js",
   "scripts": {
     "clean": "rm -rf dist",
-    "copy:static-files": "mkdir -p dist && rsync -av --exclude='node_modules/' --exclude='.git/' --exclude='.github/' --exclude='dist/' --exclude='package.json' --exclude='package-lock.json' --exclude='README.md' --exclude='generate-photo-manifests.js' --exclude='assets/photos/me/' --exclude='assets/photos/photography/' . dist/",
+    "copy:essential-files": "mkdir -p dist/assets/photos/full dist/assets/photos/thumbs dist/menu && cp *.html *.css *.js dist/ && cp -r menu/ dist/menu/ && cp assets/photos/*.json dist/assets/photos/",
     "generate:photos": "node generate-photo-manifests.js",
-    "build": "npm run clean && npm run copy:static-files && npm run generate:photos"
+    "build": "npm run clean && npm run copy:essential-files && npm run generate:photos"
   },
   "repository": {
     "type": "git",
