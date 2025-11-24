@@ -23,11 +23,11 @@ jobs:
       - name: Generate photo manifests
         run: node generate-photo-manifests.js
 
-      - name: List assets directory
-        run: ls -R assets/photos
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./
+          include: |
+            assets/photos/**/*.webp
+            assets/photos/**/*.json
