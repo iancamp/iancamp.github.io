@@ -1,169 +1,169 @@
 [
   {
     "src": "assets/photos/full/angkor_wat_full.webp",
-    "thumbSrc": "assets/photos/thumbs/angkor_wat_thumb.webp",
-    "fullSrc": "assets/photos/full/angkor_wat_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/angkor_wat_thumb.webp",
+    "fullSrc": "/assets/photos/full/angkor_wat_full.webp",
     "alt": "angkor wat",
     "date": "2024-04-09"
   },
   {
     "src": "assets/photos/full/bike_party_full.webp",
-    "thumbSrc": "assets/photos/thumbs/bike_party_thumb.webp",
-    "fullSrc": "assets/photos/full/bike_party_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/bike_party_thumb.webp",
+    "fullSrc": "/assets/photos/full/bike_party_full.webp",
     "alt": "bike party",
     "date": "2025-09-11"
   },
   {
     "src": "assets/photos/full/boat_fingerguns_full.webp",
-    "thumbSrc": "assets/photos/thumbs/boat_fingerguns_thumb.webp",
-    "fullSrc": "assets/photos/full/boat_fingerguns_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/boat_fingerguns_thumb.webp",
+    "fullSrc": "/assets/photos/full/boat_fingerguns_full.webp",
     "alt": "boat fingerguns",
     "date": "2025-08-16"
   },
   {
     "src": "assets/photos/full/campbell_soup_full.webp",
-    "thumbSrc": "assets/photos/thumbs/campbell_soup_thumb.webp",
-    "fullSrc": "assets/photos/full/campbell_soup_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/campbell_soup_thumb.webp",
+    "fullSrc": "/assets/photos/full/campbell_soup_full.webp",
     "alt": "campbell soup",
     "date": "2025-04-23"
   },
   {
     "src": "assets/photos/full/costa_rica_sloth_full.webp",
-    "thumbSrc": "assets/photos/thumbs/costa_rica_sloth_thumb.webp",
-    "fullSrc": "assets/photos/full/costa_rica_sloth_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/costa_rica_sloth_thumb.webp",
+    "fullSrc": "/assets/photos/full/costa_rica_sloth_full.webp",
     "alt": "costa rica sloth",
     "date": "2023-05-11"
   },
   {
     "src": "assets/photos/full/cusco_rescue_full.webp",
-    "thumbSrc": "assets/photos/thumbs/cusco_rescue_thumb.webp",
-    "fullSrc": "assets/photos/full/cusco_rescue_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/cusco_rescue_thumb.webp",
+    "fullSrc": "/assets/photos/full/cusco_rescue_full.webp",
     "alt": "cusco rescue",
     "date": "2025-05-14"
   },
   {
     "src": "assets/photos/full/florence_view_full.webp",
-    "thumbSrc": "assets/photos/thumbs/florence_view_thumb.webp",
-    "fullSrc": "assets/photos/full/florence_view_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/florence_view_thumb.webp",
+    "fullSrc": "/assets/photos/full/florence_view_full.webp",
     "alt": "florence view",
     "date": "2025-01-19"
   },
   {
     "src": "assets/photos/full/galaxy_suit_full.webp",
-    "thumbSrc": "assets/photos/thumbs/galaxy_suit_thumb.webp",
-    "fullSrc": "assets/photos/full/galaxy_suit_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/galaxy_suit_thumb.webp",
+    "fullSrc": "/assets/photos/full/galaxy_suit_full.webp",
     "alt": "galaxy suit",
     "date": "2025-09-24"
   },
   {
     "src": "assets/photos/full/galaxy_suit2_full.webp",
-    "thumbSrc": "assets/photos/thumbs/galaxy_suit2_thumb.webp",
-    "fullSrc": "assets/photos/full/galaxy_suit2_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/galaxy_suit2_thumb.webp",
+    "fullSrc": "/assets/photos/full/galaxy_suit2_full.webp",
     "alt": "galaxy suit2",
     "date": "2025-09-24"
   },
   {
     "src": "assets/photos/full/lares_trek_full.webp",
-    "thumbSrc": "assets/photos/thumbs/lares_trek_thumb.webp",
-    "fullSrc": "assets/photos/full/lares_trek_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/lares_trek_thumb.webp",
+    "fullSrc": "/assets/photos/full/lares_trek_full.webp",
     "alt": "lares trek",
     "date": "2025-05-14"
   },
   {
     "src": "assets/photos/full/machu_picchu_sitting_full.webp",
-    "thumbSrc": "assets/photos/thumbs/machu_picchu_sitting_thumb.webp",
-    "fullSrc": "assets/photos/full/machu_picchu_sitting_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/machu_picchu_sitting_thumb.webp",
+    "fullSrc": "/assets/photos/full/machu_picchu_sitting_full.webp",
     "alt": "machu picchu sitting",
     "date": "2025-05-16"
   },
   {
     "src": "assets/photos/full/mx_taco_full.webp",
-    "thumbSrc": "assets/photos/thumbs/mx_taco_thumb.webp",
-    "fullSrc": "assets/photos/full/mx_taco_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/mx_taco_thumb.webp",
+    "fullSrc": "/assets/photos/full/mx_taco_full.webp",
     "alt": "mx taco",
     "date": "2025-08-29"
   },
   {
     "src": "assets/photos/full/norway1_full.webp",
-    "thumbSrc": "assets/photos/thumbs/norway1_thumb.webp",
-    "fullSrc": "assets/photos/full/norway1_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/norway1_thumb.webp",
+    "fullSrc": "/assets/photos/full/norway1_full.webp",
     "alt": "norway1",
     "date": "2025-07-31"
   },
   {
     "src": "assets/photos/full/norway_ian_bergen_full.webp",
-    "thumbSrc": "assets/photos/thumbs/norway_ian_bergen_thumb.webp",
-    "fullSrc": "assets/photos/full/norway_ian_bergen_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/norway_ian_bergen_thumb.webp",
+    "fullSrc": "/assets/photos/full/norway_ian_bergen_full.webp",
     "alt": "norway ian bergen",
     "date": "2025-08-07"
   },
   {
     "src": "assets/photos/full/peru_cooking_full.webp",
-    "thumbSrc": "assets/photos/thumbs/peru_cooking_thumb.webp",
-    "fullSrc": "assets/photos/full/peru_cooking_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/peru_cooking_thumb.webp",
+    "fullSrc": "/assets/photos/full/peru_cooking_full.webp",
     "alt": "peru cooking",
     "date": "2025-05-17"
   },
   {
     "src": "assets/photos/full/peru_flute_full.webp",
-    "thumbSrc": "assets/photos/thumbs/peru_flute_thumb.webp",
-    "fullSrc": "assets/photos/full/peru_flute_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/peru_flute_thumb.webp",
+    "fullSrc": "/assets/photos/full/peru_flute_full.webp",
     "alt": "peru flute",
     "date": "2025-05-19"
   },
   {
     "src": "assets/photos/full/peru_hat_full.webp",
-    "thumbSrc": "assets/photos/thumbs/peru_hat_thumb.webp",
-    "fullSrc": "assets/photos/full/peru_hat_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/peru_hat_thumb.webp",
+    "fullSrc": "/assets/photos/full/peru_hat_full.webp",
     "alt": "peru hat",
     "date": "2025-05-07"
   },
   {
     "src": "assets/photos/full/prague_tower_full.webp",
-    "thumbSrc": "assets/photos/thumbs/prague_tower_thumb.webp",
-    "fullSrc": "assets/photos/full/prague_tower_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/prague_tower_thumb.webp",
+    "fullSrc": "/assets/photos/full/prague_tower_full.webp",
     "alt": "prague tower",
     "date": "2024-11-30"
   },
   {
     "src": "assets/photos/full/punk_royale_full.webp",
-    "thumbSrc": "assets/photos/thumbs/punk_royale_thumb.webp",
-    "fullSrc": "assets/photos/full/punk_royale_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/punk_royale_thumb.webp",
+    "fullSrc": "/assets/photos/full/punk_royale_full.webp",
     "alt": "punk royale",
     "date": "2025-11-24"
   },
   {
     "src": "assets/photos/full/tiki_cocktail_pour_full.webp",
-    "thumbSrc": "assets/photos/thumbs/tiki_cocktail_pour_thumb.webp",
-    "fullSrc": "assets/photos/full/tiki_cocktail_pour_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/tiki_cocktail_pour_thumb.webp",
+    "fullSrc": "/assets/photos/full/tiki_cocktail_pour_full.webp",
     "alt": "tiki cocktail pour",
     "date": "2023-08-03"
   },
   {
     "src": "assets/photos/full/tiki_ian_full.webp",
-    "thumbSrc": "assets/photos/thumbs/tiki_ian_thumb.webp",
-    "fullSrc": "assets/photos/full/tiki_ian_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/tiki_ian_thumb.webp",
+    "fullSrc": "/assets/photos/full/tiki_ian_full.webp",
     "alt": "tiki ian",
     "date": "2025-11-24"
   },
   {
     "src": "assets/photos/full/tux_full.webp",
-    "thumbSrc": "assets/photos/thumbs/tux_thumb.webp",
-    "fullSrc": "assets/photos/full/tux_full.webp",
-    "alt": "tux",
+    "thumbSrc": "/assets/photos/thumbs/tux_thumb.webp",
+    "fullSrc": "/assets/photos/full/tux_full.webp",
+    "alt": "Jamses Bond Ian",
     "date": "2022-04-16"
   },
   {
     "src": "assets/photos/full/tux2_full.webp",
-    "thumbSrc": "assets/photos/thumbs/tux2_thumb.webp",
-    "fullSrc": "assets/photos/full/tux2_full.webp",
-    "alt": "tux2",
+    "thumbSrc": "/assets/photos/thumbs/tux2_thumb.webp",
+    "fullSrc": "/assets/photos/full/tux2_full.webp",
+    "alt": "Jamses Bond Ian",
     "date": "2023-06-18"
   },
   {
     "src": "assets/photos/full/worship_guinea_pig_full.webp",
-    "thumbSrc": "assets/photos/thumbs/worship_guinea_pig_thumb.webp",
-    "fullSrc": "assets/photos/full/worship_guinea_pig_full.webp",
+    "thumbSrc": "/assets/photos/thumbs/worship_guinea_pig_thumb.webp",
+    "fullSrc": "/assets/photos/full/worship_guinea_pig_full.webp",
     "alt": "worship guinea pig",
     "date": "2025-05-12"
   }
