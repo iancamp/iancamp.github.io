@@ -3,7 +3,7 @@ import path from "path";
 import exifr from "exifr";
 import sharp from "sharp";
 
-const baseDir = "assets/photos";
+const baseDir = process.env.BASE_DIR || "assets/photos";
 const folders = ["me", "photography"];
 const THUMB_WIDTH = 400;
 const FULL_WIDTH = 1600;

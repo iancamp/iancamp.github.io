@@ -25,9 +25,18 @@ jobs:
 
       - name: Generate photo manifests
         run: node generate-photo-manifests.js
+        env:
+          BASE_DIR: dist/assets/photos
+      
+      - name: Remove original JPG and PNG files
+        run: find dist/assets/photos -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) -delete
+
+      # 3️⃣ Add .nojekyll (safe even if not needed)
+      - name: Disable Jekyll
+        run: touch dist/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
+          publish_dir: ./dist
