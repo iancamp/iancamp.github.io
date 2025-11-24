@@ -18,39 +18,42 @@ jobs:
           node-version: 20
 
       - name: Install dependencies (if any)
-        run: npm install || true
+        run: npm ci || npm install
 
-      # 1️⃣ Build your site FIRST (if applicable)
+      # 1️⃣ Build your static site — this must produce ./dist/
       - name: Build site
         run: |
           if [ -f package.json ] && grep -q "\"build\"" package.json; then
             npm run build
           else
+            echo "⚠️ No build script found, creating dummy dist"
             mkdir -p dist
-            echo "No build script found, continuing with empty dist/"
+            cp -r * dist/ || true
           fi
 
-      # 2️⃣ Generate WebP + JSON outputs INSIDE dist/
+      # 2️⃣ Generate your images and manifests INSIDE dist/
       - name: Generate photo manifests
         run: node generate-photo-manifests.js
         env:
           OUT_BASE_DIR: dist/assets/photos
 
-      # 3️⃣ Remove originals (optional cleanup)
+      # 3️⃣ (Optional) Remove originals to keep deploy light
       - name: Remove original JPG and PNG files
         run: find dist/assets/photos -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) -delete
 
-      # 4️⃣ Disable Jekyll to ensure all assets are served
+      # 4️⃣ Disable Jekyll (so GH Pages serves all files)
       - name: Disable Jekyll
         run: touch dist/.nojekyll
 
+      # 5️⃣ Debug listing to confirm correct contents
       - name: List dist contents
         run: find dist -type f | sort
 
-
-      # 5️⃣ Deploy ONLY dist’s contents (no dist folder itself)
+      # 6️⃣ Deploy EVERYTHING in dist/ to gh-pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          force_orphan: true
+          enable_jekyll: false
