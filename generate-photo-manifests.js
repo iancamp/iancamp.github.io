@@ -23,7 +23,7 @@ async function buildManifest(folder) {
   if (fs.existsSync(outputFile)) {
     try {
       const old = JSON.parse(fs.readFileSync(outputFile, "utf8"));
-      old.forEach(p => { if (p.src) existing[p.src] = p.caption || ""; });
+      old.forEach(p => { if (p.fullSrc) existing[p.fullSrc] = p.caption || ""; });
     } catch (err) {
       console.warn(`⚠️ Could not parse existing ${outputFile}:`, err.message);
     }
@@ -64,7 +64,6 @@ async function buildManifest(folder) {
     }
 
     photos.push({
-      src: path.join(baseDir, folder, filename).replace(/\\/g, "/"),
       thumbSrc: path.join(THUMB_DIR, thumbFilename).replace(/\\/g, "/"),
       fullSrc: path.join(FULL_DIR, fullWebpFilename).replace(/\\/g, "/"),
       alt: filename.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " "),

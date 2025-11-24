@@ -20,6 +20,9 @@ jobs:
       - name: Install dependencies (if any)
         run: npm install || true
 
+      - name: Install dependencies (if any)
+        run: npm install || true
+
       - name: Generate photo manifests
         run: node generate-photo-manifests.js
 
@@ -28,6 +31,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./
-          include: |
-            assets/photos/**/*.webp
-            assets/photos/**/*.json
