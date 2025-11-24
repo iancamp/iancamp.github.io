@@ -3,3 +3,4 @@ node_modules/
 .env
 assets/photos/thumbs
 assets/photos/full
+geocode-cache.json
