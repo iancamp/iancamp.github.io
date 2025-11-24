@@ -6,7 +6,7 @@
   "main": "script.js",
   "scripts": {
     "clean": "rm -rf dist",
-    "copy:essential-files": "mkdir -p dist/assets/photos/full dist/assets/photos/thumbs dist/menu && cp *.html *.css *.js dist/ && cp -r menu/ dist/menu/ && cp assets/photos/*.json dist/assets/photos/",
+    "copy:essential-files": "mkdir -p dist/assets/photos/full dist/assets/photos/thumbs dist/menu && cp *.html *.css *.js dist/ && cp -r menu/. dist/menu/ && cp assets/photos/*.json dist/assets/photos/",
     "generate:photos": "node generate-photo-manifests.js",
     "build": "npm run clean && npm run copy:essential-files && npm run generate:photos"
   },
