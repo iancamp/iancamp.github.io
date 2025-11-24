@@ -23,33 +23,19 @@ jobs:
       - name: Install dependencies (if any)
         run: npm ci || npm install
 
-      # 4️⃣ Build the site (creates dist/)
-      - name: Build site
-        run: npm run build
-
-      # 5️⃣ Generate photos and JSON manifests INSIDE dist/
+      # 4️⃣ Generate photo manifests
       - name: Generate photo manifests
-        run: node generate-photo-manifests.js
-        env:
-          OUT_BASE_DIR: dist/assets/photos
+        run: npm run generate:photos
 
-      # 6️⃣ Optional cleanup: remove JPGs to keep deploy small
-      - name: Remove original JPG and PNG files
-        run: find dist/assets/photos -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) -delete || true
+      # 5️⃣ Disable Jekyll (GH Pages serves all files directly)
+      - name: Create .nojekyll file
+        run: touch .nojekyll
 
-      # 7️⃣ Disable Jekyll (GH Pages serves all files directly)
-      - name: Disable Jekyll
-        run: touch dist/.nojekyll
-
-      # 8️⃣ Debug listing: verify build contents
-      - name: List dist contents
-        run: find dist -type f | sort
-
-      # 9️⃣ Deploy contents of dist/ to gh-pages
+      # 6️⃣ Deploy contents of root to gh-pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./
           force_orphan: true
           enable_jekyll: false

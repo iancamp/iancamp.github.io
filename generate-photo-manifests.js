@@ -5,7 +5,7 @@ import sharp from "sharp";
 
 // --- CONFIGURATION ---
 const SRC_BASE_DIR = "assets/photos"; // where your original JPGs live
-const OUT_BASE_DIR = process.env.OUT_BASE_DIR || SRC_BASE_DIR; // where webp + json will be written
+const OUT_BASE_DIR = SRC_BASE_DIR; // where webp + json will be written
 
 const folders = ["me", "photography"];
 const THUMB_WIDTH = 400;
