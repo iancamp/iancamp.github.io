@@ -37,8 +37,13 @@ async function buildManifest(folder) {
     const thumbOutput = path.join(THUMB_DIR, `${name}_thumb.webp`);
     const fullOutput = path.join(FULL_DIR, `${name}_full.webp`);
 
-    await sharp(fullPath).resize(THUMB_WIDTH).webp({ quality: 80 }).toFile(thumbOutput);
-    await sharp(fullPath).resize(FULL_WIDTH).webp({ quality: 90 }).toFile(fullOutput);
+    const image = sharp(fullPath);
+    const metadata = await image.metadata();
+    const width = metadata.width;
+    const height = metadata.height;
+
+    await image.resize(THUMB_WIDTH).webp({ quality: 80 }).toFile(thumbOutput);
+    await image.resize(FULL_WIDTH).webp({ quality: 90 }).toFile(fullOutput);
 
     let date;
     try {
@@ -54,7 +59,9 @@ async function buildManifest(folder) {
       thumbSrc: `/assets/photos/thumbs/${name}_thumb.webp`,
       fullSrc: `/assets/photos/full/${name}_full.webp`,
       alt: name.replace(/[-_]/g, " "),
-      date
+      date,
+      width,
+      height
     });
   }
 

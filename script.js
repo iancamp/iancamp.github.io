@@ -47,6 +47,8 @@ function makePhotoCard(p) {
   img.sizes = `(max-width: ${THUMB_WIDTH}px) ${THUMB_WIDTH}px, ${FULL_WIDTH}px`;
   img.alt = p.alt;
   img.loading = 'lazy';
+  img.width = p.width;
+  img.height = p.height;
   img.addEventListener('click', () => openLightbox(p));
 
   const caption = document.createElement('div');
@@ -68,6 +70,8 @@ function makeMasonryTile(p) {
   img.sizes = `(max-width: ${THUMB_WIDTH}px) ${THUMB_WIDTH}px, ${FULL_WIDTH}px`;
   img.alt = p.alt;
   img.loading = 'lazy';
+  img.width = p.width;
+  img.height = p.height;
   img.addEventListener('click', () => openLightbox(p));
   div.appendChild(img);
   return div;
